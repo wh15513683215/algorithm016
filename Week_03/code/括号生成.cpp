@@ -1,19 +1,35 @@
 class Solution {
 public:
+     vector<string> res;
+     
     vector<string> generateParenthesis(int n) {
-        vector<string> res;
-        adds(res, "", n, 0);
-        return res;
-    }
-    void adds(vector<string> &res, string str, int left, int right) {
-        if (right == 0 && left == 0) {
-            res.push_back(str);
-            return;
+        string s;
+        _generate(0, 0, n, res, s); //只关注当前层的 
+        return res; 
+    } 
+       void _generate(int left, int right, int max, vector<string>& res, string& s) {
+        //teminator
+         if (left == max && right == max) {
+         res.push_back(s);
+         return ;
+         }
+        
+        //process
+       
+        //drill down
+        if (left < max) {
+        s.push_back('(');
+        _generate(left + 1, right, max, res, s);
+        s.pop_back();
         }
-        if (right > 0) adds(res, str + ")", left, right - 1);
-        if (left > 0) adds(res, str + "(", left - 1, right + 1);
-    }
-}; //O(n)O(n)
+        if (right < left) {
+        s.push_back(')');
+        _generate(left, right + 1, max, res, s);
+        s.pop_back();
+        }
+        //reverse state
+    } //自顶向下编程
+
  //动态规划
 class Solution {
 public:
